@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "title": "Elden Ring",
+    "image": "/images/games/eldenring.jpg",
+    "genre": "RPG"
+  },
+  {
+    "id": 2,
+    "title": "Cyberpunk 2077",
+    "image": "/images/games/cyberpunk2077.jpg",
+    "genre": "Ação"
+  },
+  {
+    "id": 3,
+    "title": "Hollow Knight",
+    "image": "/images/games/hollow.jpg",
+    "genre": "Metroidvania"
+  },
+  {
+    "id": 4,
+    "title": "The Last of US",
+    "genre": "Ação e Aventura",
+    "image": "/images/games/lastofus.jpg"
+  },
+  {
+    "id": 5,
+    "title": "The Witcher 3: Wild Hunt",
+    "genre": "RPG",
+    "image": "/images/games/witcher3.jpg"
+  },
+  {
+    "id": 6,
+    "title": "Ghost of Tsushima",
+    "genre": "Ação e Aventura",
+    "image": "/images/games/ghostoftsushima.jpg"
+  },
+  {
+    "id": 7,
+    "title": "DOOM Eternal",
+    "genre": "FPS",
+    "image": "/images/games/doometernal.jpg"
+  },
+  {
+    "id": 8,
+    "title": "BioShock",
+    "genre": "FPS / Aventura",
+    "image": "/images/games/bioshock.jpg"
+  }
+]

@@ -1,40 +1,16 @@
-import Head from "next/head";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import GameCard from "@/components/GameCards";
-import Sidebar from "@/components/Sidebar";
+import Link from "next/link";
 
-const games = [
-  { title: "Elden Ring", image: "/images/eldenring.jpg", genre: "RPG" },
-  { title: "Cyberpunk 2077", image: "/images/cyberpunk2077.jpg", genre: "Ação" },
-  { title: "Hollow Knight", image: "/images/hollow.jpg", genre: "Metroidvania" },
-];
-
-export default function Home() {
+export default function HomePage() {
   return (
-    <>
-      <Head>
-        <title>GameShelf</title>
-        <meta name="description" content="Descubra e organize seus jogos favoritos!" />
-      </Head>
-
-      <div className="flex">
-        <Sidebar /> 
-        <div className="flex-1">
-          <Header />
-
-          <main className="container mx-auto px-4 py-8">
-            <h2 className="text-2xl font-bold text-white mb-4">Jogos em Destaque</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              {games.map((game, index) => (
-                <GameCard key={index} {...game} />
-              ))}
-            </div>
-          </main>
-
-          <Footer />
-        </div>
-      </div>
-    </>
+    <div className="flex flex-col items-center justify-center min-h-screen px-4 bg-gray-100 text-gray-900 text-center">
+      <h1 className="text-4xl md:text-5xl font-bold mb-4">Bem-vindo ao <span className="text-blue-600">GameShelf</span></h1>
+      <p className="text-gray-600 mb-6 text-lg">Sua coleção de jogos, organizada e acessível</p>
+      <Link
+        href="/login"
+        className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-md transition"
+      >
+        Entrar
+      </Link>
+    </div>
   );
 }

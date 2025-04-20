@@ -1,3 +1,4 @@
+// src/components/Sidebar.tsx
 "use client";
 import { useState } from "react";
 import Image from "next/image";
@@ -9,81 +10,68 @@ const Sidebar = () => {
   return (
     <>
       <button
-        className="md:hidden fixed top-4 left-4 z-50 bg-gray-800 p-2 rounded"
+        className="md:hidden fixed top-20 left-4 z-50 bg-gray-800 p-2 rounded"
         onClick={() => setIsOpen(!isOpen)}
       >
         <Menu size={24} className="text-white" />
       </button>
 
       <aside
-        className={`bg-gray-900 text-white w-64 h-screen p-6 fixed top-0 left-0 transition-transform duration-300
-        ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:relative z-40`}
+        className={`bg-gray-900 text-white w-64 h-full md:h-screen p-6 fixed top-0 left-0 transition-transform duration-300 ease-in-out
+        ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:relative z-40 overflow-y-auto`}
       >
         <div className="flex items-center gap-3 mb-6">
-          <Image src="/images/profile.jpg" alt="User" width={50} height={50} className="rounded-full" />
+          <Image src="/images/profile.jpg" alt="User" width={40} height={40} className="rounded-full" />
           <span className="text-lg font-semibold">Usuário</span>
         </div>
 
         <nav className="flex flex-col gap-4">
-          <div className="flex items-center gap-2 cursor-pointer hover:text-gray-400">
-            <Heart size={20} /> <span>Wishlist</span>
-          </div>
-          <div className="flex items-center gap-2 cursor-pointer hover:text-gray-400">
-            <Library size={20} /> <span>Library</span>
-          </div>
-          <div className="flex items-center gap-2 cursor-pointer hover:text-gray-400">
-            <Users size={20} /> <span>Followers</span>
-          </div>
+          <SidebarItem icon={<Heart size={20} />} label="Wishlist" />
+          <SidebarItem icon={<Library size={20} />} label="Library" />
+          <SidebarItem icon={<Users size={20} />} label="Followers" />
         </nav>
 
-        <div className="mt-6">
-          <h2 className="text-gray-400 text-sm uppercase mb-2">Releases</h2>
-          <nav className="flex flex-col gap-3">
-            <div className="flex items-center gap-2 cursor-pointer hover:text-gray-400">
-              <Calendar size={20} /> <span>Last Year</span>
-            </div>
-            <div className="flex items-center gap-2 cursor-pointer hover:text-gray-400">
-              <Calendar size={20} /> <span>This Month</span>
-            </div>
-            <div className="flex items-center gap-2 cursor-pointer hover:text-gray-400">
-              <Calendar size={20} /> <span>Next Month</span>
-            </div>
-            <div className="flex items-center gap-2 cursor-pointer hover:text-gray-400">
-              <Calendar size={20} /> <span>Calendar</span>
-            </div>
-          </nav>
-        </div>
+        <SidebarSection title="Releases">
+          <SidebarItem icon={<Calendar size={20} />} label="Last Year" />
+          <SidebarItem icon={<Calendar size={20} />} label="This Month" />
+          <SidebarItem icon={<Calendar size={20} />} label="Next Month" />
+          <SidebarItem icon={<Calendar size={20} />} label="Calendar" />
+        </SidebarSection>
 
-        <div className="mt-6">
-          <h2 className="text-gray-400 text-sm uppercase mb-2">Top</h2>
-          <nav className="flex flex-col gap-3">
-            <div className="flex items-center gap-2 cursor-pointer hover:text-gray-400">
-              <Star size={20} /> <span>Best of the Year</span>
-            </div>
-            <div className="flex items-center gap-2 cursor-pointer hover:text-gray-400">
-              <TrendingUp size={20} /> <span>Popular in 2025</span>
-            </div>
-          </nav>
-        </div>
+        <SidebarSection title="Top">
+          <SidebarItem icon={<Star size={20} />} label="Best of the Year" />
+          <SidebarItem icon={<TrendingUp size={20} />} label="Popular in 2025" />
+        </SidebarSection>
 
         <nav className="flex flex-col gap-3 mt-6">
-          <div className="flex items-center gap-2 cursor-pointer hover:text-gray-400">
-            <List size={20} /> <span>Reviews</span>
-          </div>
-          <div className="flex items-center gap-2 cursor-pointer hover:text-gray-400">
-            <List size={20} /> <span>All Games</span>
-          </div>
+          <SidebarItem icon={<List size={20} />} label="Reviews" />
+          <SidebarItem icon={<List size={20} />} label="All Games" />
         </nav>
       </aside>
 
       {isOpen && (
         <div
-          className="fixed inset-0 md:hidden z-30"
+          className="fixed inset-0 md:hidden z-30 bg-black/50"
           onClick={() => setIsOpen(false)}
-        ></div>
+        />
       )}
     </>
   );
 };
+
+const SidebarItem = ({ icon, label }: { icon: React.ReactNode; label: string }) => (
+  <div className="flex items-center gap-2 cursor-pointer hover:text-gray-400 transition-colors duration-200">
+    {icon} <span>{label}</span>
+  </div>
+);
+
+const SidebarSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
+  <div className="mt-6">
+    <h2 className="text-gray-400 text-sm uppercase mb-2">{title}</h2>
+    <nav className="flex flex-col gap-3">
+      {children}
+    </nav>
+  </div>
+);
 
 export default Sidebar;
