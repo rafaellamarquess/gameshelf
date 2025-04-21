@@ -17,7 +17,7 @@ const Sidebar = () => {
       </button>
 
       <aside
-        className={`bg-gray-900 text-white w-64 h-full md:h-screen p-6 fixed top-0 left-0 transition-transform duration-300 ease-in-out
+        className={`bg-black-900 text-white w-64 h-full md:h-screen p-6 fixed top-0 left-0 transition-transform duration-300 ease-in-out
         ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:relative z-40 overflow-y-auto`}
       >
         <div className="flex items-center gap-3 mb-6">
@@ -60,14 +60,14 @@ const Sidebar = () => {
 };
 
 const SidebarItem = ({ icon, label }: { icon: React.ReactNode; label: string }) => (
-  <div className="flex items-center gap-2 cursor-pointer hover:text-gray-400 transition-colors duration-200">
+  <div className="flex items-center gap-2 cursor-pointer hover:text-black-400 transition-colors duration-200">
     {icon} <span>{label}</span>
   </div>
 );
 
 const SidebarSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div className="mt-6">
-    <h2 className="text-gray-400 text-sm uppercase mb-2">{title}</h2>
+    <h2 className="text-white-400 text-sm uppercase mb-2">{title}</h2>
     <nav className="flex flex-col gap-3">
       {children}
     </nav>
