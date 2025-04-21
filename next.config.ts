@@ -5,7 +5,12 @@ const isDev = process.env.NODE_ENV === "development";
 
 const nextConfig = {
   reactStrictMode: true,
-  // outras configs...
+
+  images: {
+    domains: ["res.cloudinary.com"], 
+  },
+
+  // outras configs se tiver...
 };
 
 export default withPWA({
