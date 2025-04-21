@@ -123,7 +123,7 @@ export default function AddGame() {
                     Ano de Lançamento
                   </label>
                   <input
-                    type="number"
+                    type="text"
                     id="releaseYear"
                     name="releaseYear"
                     value={game.releaseYear}
