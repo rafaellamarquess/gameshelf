@@ -1,6 +1,9 @@
-"use client";
+'use client';
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -34,40 +37,47 @@ const LoginPage = () => {
   };
 
   return (
-<div className="flex justify-center  pt-20 bg-black-100 px-4">
+    <div className="flex flex-col min-h-screen bg-black-100">
+      <Header />
+      <div className="flex flex-1">
 
-      <div className="w-full max-w-md bg-black p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              required
-            />
+        <main className="flex flex-1 justify-center items-center px-4">
+          <div className="w-full max-w-md bg-black p-8 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-bold text-center mb-6 text-white">Login</h2>
+            {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-white-700">Email</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-white-700">Senha</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition"
+              >
+                Entrar
+              </button>
+            </form>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Senha</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition"
-          >
-            Entrar
-          </button>
-        </form>
+        </main>
       </div>
+
+      <Footer />
     </div>
   );
 };

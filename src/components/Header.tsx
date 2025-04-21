@@ -47,7 +47,7 @@ const Header = () => {
         <ul className="flex flex-col sm:flex-row gap-3 sm:gap-4 text-sm justify-end items-end sm:items-center">
           <li><Link href="/dashboard" className="hover:text-gray-400">Home</Link></li>
           <li><Link href="/add-game" className="hover:text-gray-400">Adicionar Games</Link></li>
-          <li><Link href="/login" className="hover:text-gray-400">Logout</Link></li>
+          <li><Link href="/login" className="hover:text-gray-400">Login</Link></li>
         </ul>
       </nav>
     </div>
