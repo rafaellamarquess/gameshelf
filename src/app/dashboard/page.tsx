@@ -1,16 +1,19 @@
 "use client";
 import React from "react";
-import GameCard from "@/components/GameCards";
+import GameCard from "@/components/GameCard";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import Footer from "@/components/Footer";
-import { Game } from "@/lib/games";
 
+import { Game } from "@/components/GameCard";
 async function fetchGames(): Promise<Game[]> {
-  const res = await fetch("/api/games");
+  const res = await fetch(process.env.NEXT_PUBLIC_API_URL as string, {
+    cache: "no-store",
+  });
   if (!res.ok) throw new Error("Erro ao carregar os jogos");
   return res.json();
 }
+
 
 export default function Dashboard() {
   const [games, setGames] = React.useState<Game[]>([]);
@@ -50,7 +53,7 @@ export default function Dashboard() {
     <h2 className="text-2xl font-bold text-white-800 mb-6">Jogos em Destaque</h2>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {games.map((game) => (
-        <GameCard key={game.id} {...game} />
+        <GameCard key={game._id} {...game} />
       ))}
     </div>
   </div>

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useState } from "react";
 import Head from "next/head";
@@ -10,6 +10,8 @@ export default function AddGame() {
   const [game, setGame] = useState({
     title: "",
     genre: "",
+    platform: "",
+    releaseYear: "",
   });
 
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -39,6 +41,8 @@ export default function AddGame() {
     const formData = new FormData();
     formData.append("title", game.title);
     formData.append("genre", game.genre);
+    formData.append("platform", game.platform);
+    formData.append("releaseYear", game.releaseYear);
     formData.append("image", imageFile);
 
     try {
@@ -52,7 +56,7 @@ export default function AddGame() {
       }
 
       alert("Jogo adicionado com sucesso!");
-      setGame({ title: "", genre: "" });
+      setGame({ title: "", genre: "", platform: "", releaseYear: "" });
       setImageFile(null);
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -101,6 +105,36 @@ export default function AddGame() {
                     id="genre"
                     name="genre"
                     value={game.genre}
+                    onChange={handleChange}
+                    required
+                    className="mt-1 block w-full px-4 py-2 border border-white-300 rounded-md"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="platform" className="block text-sm font-medium text-white-700">
+                    Plataforma
+                  </label>
+                  <input
+                    type="text"
+                    id="platform"
+                    name="platform"
+                    value={game.platform}
+                    onChange={handleChange}
+                    required
+                    className="mt-1 block w-full px-4 py-2 border border-white-300 rounded-md"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="releaseYear" className="block text-sm font-medium text-white-700">
+                    Ano de Lançamento
+                  </label>
+                  <input
+                    type="number"
+                    id="releaseYear"
+                    name="releaseYear"
+                    value={game.releaseYear}
                     onChange={handleChange}
                     required
                     className="mt-1 block w-full px-4 py-2 border border-white-300 rounded-md"
