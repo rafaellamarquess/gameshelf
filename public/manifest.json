@@ -1,78 +1,57 @@
 {
-  "name": "Game Shelf",
-  "short_name": "Game Shelf",
-  "description": "Uma plataforma para jogar e gerenciar jogos online.",
-  "start_url": "https://game-shelf.netlify.app/login",
+  "name": "GameShelf",
+  "short_name": "GameShelf",
+  "description": "Sua Biblioteca de Jogos",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#000000",
-  "scope": "https://game-shelf.netlify.app/",
+  "theme_color": "#1f2937",
+  "scope": "/",
   "icons": [
     {
-      "src": "/assets/icons/android/icon-72x72.png",
-      "sizes": "72x72",
-      "type": "image/png"
-    },
-    {
-      "src": "/assets/icons/android/icon-96x96.png",
-      "sizes": "96x96",
-      "type": "image/png"
-    },
-    {
-      "src": "/assets/icons/android/icon-128x128.png",
-      "sizes": "128x128",
-      "type": "image/png"
-    },
-    {
-      "src": "/assets/icons/android/icon-192x192.png",
+      "src": "/icons/android/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/assets/icons/android/icon-512x512.png",
+      "src": "/icons/android/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
     }
   ],
+  "prefer_related_applications": false,
   "related_applications": [
     {
       "platform": "play",
-      "url": "https://play.google.com/store/apps/details?id=com.gameshelf",
-      "id": "com.gameshelf"
+      "url": "https://play.google.com/store/apps/details?id=com.example.gameshelf",
+      "id": "com.example.gameshelf"
     }
   ],
-  "scope_extensions": [
-    { "origin": "https://game-shelf.netlify.app" }
-  ],
-  "handle_links": {
-    "urls": ["https://game-shelf.netlify.app/*"],
-    "exclude_paths": ["/api/*"]
+  "scope_extensions": ["/"],
+  "categories": ["games", "entertainment"],
+  "dir": "ltr",
+  "iarc_rating_id": "com.example.gameshelf.rating",
+  "lang": "pt-BR",
+  "launch_handler": {
+    "action": "open_app"
   },
+  "handle_links": true,
+  "protocol_handlers": [
+    {
+      "protocol": "gameshelf",
+      "url": "https://gameshelf.com/handle/{action}"
+    }
+  ],
   "widgets": [
     {
-      "name": "Top Jogos",
-      "short_name": "Ranking",
-      "description": "Ranking de jogos mais jogados",
-      "url": "/widgets/ranking",
-      "icons": [{ "src": "/assets/icons/ranking.png", "sizes": "96x96" }]
+      "widget_type": "app_launch",
+      "url": "/launch_widget",
+      "title": "Launch GameShelf"
     }
-  ],
-  "screenshots": [
-    {
-      "src": "/assets/screenshots/arcade.png",
-      "sizes": "540x720",
-      "type": "image/png",
-      "label": "Tela principal da galeria de jogos"
-    }
-  ],
-  "background_sync": {
-    "name": "sync-games",
-    "periodic": true
-  },
-  "push_notifications": {
-    "enabled": true
-  },
-  "lang": "pt-BR",
-  "dir": "ltr",
-  "categories": ["games", "entertainment"]
+  ]
 }

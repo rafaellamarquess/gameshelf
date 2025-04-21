@@ -3,12 +3,14 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox
 const CACHE = "pwabuilder-page-v2";
 const OFFLINE_PAGE = "offline.html";
 
+// Skip waiting quando mandado
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
     self.skipWaiting();
   }
 });
 
+// Instalação: cache da página offline
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE).then((cache) => cache.add(OFFLINE_PAGE))
@@ -25,7 +27,7 @@ if (workbox.navigationPreload.isSupported()) {
   workbox.navigationPreload.enable();
 }
 
-// Fetch- serve página offline em caso de falha
+// Fetch: serve página offline em caso de falha
 self.addEventListener('fetch', (event) => {
   if (event.request.mode === 'navigate') {
     event.respondWith((async () => {
@@ -42,7 +44,7 @@ self.addEventListener('fetch', (event) => {
   }
 });
 
-// Background Sync (ex: sincronizar dados offline)
+//  Background Sync (ex: sincronizar dados offline)
 self.addEventListener('sync', (event) => {
   if (event.tag === 'sync-jogos') {
     event.waitUntil(syncJogosComServidor());
@@ -51,7 +53,8 @@ self.addEventListener('sync', (event) => {
 
 async function syncJogosComServidor() {
   console.log('🔄 Sincronizando dados com servidor...');
-  return Promise.resolve();
+  // Aqui entra a lógica real de sync, tipo IndexedDB -> API
+  return Promise.resolve(); // placeholder
 }
 
 // Periodic Background Sync
@@ -61,7 +64,7 @@ self.addEventListener("periodicsync", (event) => {
   }
 });
 
-// Push Notification
+//Push Notification
 self.addEventListener("push", (event) => {
   const data = event.data?.json() || {};
   const title = data.title || "Notificação GameShelf";
@@ -72,4 +75,20 @@ self.addEventListener("push", (event) => {
   };
 
   event.waitUntil(self.registration.showNotification(title, options));
+});
+
+// Handle links as app
+self.addEventListener('notificationclick', (event) => {
+  const { notification } = event;
+  const url = notification.data.url || '/';
+  event.waitUntil(
+    clients.openWindow(url)
+  );
+  notification.close();
+});
+
+self.addEventListener('fetch', (event) => {
+  if (event.request.url.startsWith("gameshelf://")) {
+    event.respondWith(new Response("Custom Protocol Handler: gameshelf://", { status: 200 }));
+  }
 });
