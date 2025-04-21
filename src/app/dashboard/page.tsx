@@ -4,8 +4,9 @@ import GameCard from "@/components/GameCard";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import Footer from "@/components/Footer";
-
 import { Game } from "@/components/GameCard";
+
+
 async function fetchGames(): Promise<Game[]> {
   const res = await fetch(process.env.NEXT_PUBLIC_API_URL as string, {
     cache: "no-store",

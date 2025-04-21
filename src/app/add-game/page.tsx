@@ -10,8 +10,8 @@ export default function AddGame() {
   const [game, setGame] = useState({
     title: "",
     genre: "",
-    platform: "",
     releaseYear: "",
+
   });
 
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -32,31 +32,37 @@ export default function AddGame() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     if (!imageFile) {
       alert("Selecione uma imagem para o jogo.");
       return;
     }
-
+  
     const formData = new FormData();
     formData.append("title", game.title);
     formData.append("genre", game.genre);
-    formData.append("platform", game.platform);
     formData.append("releaseYear", game.releaseYear);
     formData.append("image", imageFile);
-
+  
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  
+    if (!apiUrl) {
+      alert("URL da API não configurada.");
+      return;
+    }
+  
     try {
-      const response = await fetch("/api/games", {
+      const response = await fetch(apiUrl, {
         method: "POST",
         body: formData,
       });
-
+  
       if (!response.ok) {
         throw new Error("Erro ao adicionar o jogo");
       }
-
+  
       alert("Jogo adicionado com sucesso!");
-      setGame({ title: "", genre: "", platform: "", releaseYear: "" });
+      setGame({ title: "", genre: "", releaseYear: "" });
       setImageFile(null);
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -66,6 +72,7 @@ export default function AddGame() {
       }
     }
   };
+  
 
   return (
     <>
@@ -105,21 +112,6 @@ export default function AddGame() {
                     id="genre"
                     name="genre"
                     value={game.genre}
-                    onChange={handleChange}
-                    required
-                    className="mt-1 block w-full px-4 py-2 border border-white-300 rounded-md"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="platform" className="block text-sm font-medium text-white-700">
-                    Plataforma
-                  </label>
-                  <input
-                    type="text"
-                    id="platform"
-                    name="platform"
-                    value={game.platform}
                     onChange={handleChange}
                     required
                     className="mt-1 block w-full px-4 py-2 border border-white-300 rounded-md"

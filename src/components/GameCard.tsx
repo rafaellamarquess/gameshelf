@@ -7,7 +7,6 @@ import Image from "next/image";
 export interface Game {
   _id: string;
   title: string;
-  platform: string;
   genre: string;
   releaseYear: number;
   imageUrl: string;
@@ -18,7 +17,6 @@ const GameCard: React.FC<Game> = ({
   title,
   imageUrl,
   genre,
-  platform,
   releaseYear,
 }) => {
   return (
@@ -32,9 +30,8 @@ const GameCard: React.FC<Game> = ({
       />
       <h3 className="text-white text-lg font-bold mt-2">{title}</h3>
       <p className="text-gray-400 text-sm">
-        {genre} • {platform}
+        {genre} • {releaseYear}
       </p>
-      <p className="text-gray-500 text-xs mt-1">Lançado em {releaseYear}</p>
     </div>
   );
 };
