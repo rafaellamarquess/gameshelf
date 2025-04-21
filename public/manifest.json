@@ -1,21 +1,130 @@
 {
   "name": "GameShelf",
   "short_name": "GameShelf",
+  "description": "Sua Biblioteca de Jogos",
+  "lang": "pt-BR",
+  "dir": "ltr",
   "start_url": "/",
+  "scope": "/",
+  "scope_extensions": ["https://gameshelf.app"],
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#0f172a",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "background_color": "#1f2937",
+  "theme_color": "#1f2937",
+  "orientation": "portrait",
+  "id": "/",
+  "iarc_rating_id": "eebbcf00-1234-4567-89ab-cd1234567890",
+  "categories": ["games", "utilities", "productivity"],
   "icons": [
     {
-      "src": "/icons/android/icon-512x512.png",
+      "src": "/icons/android/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/icons/android/icon-192x192.png",
+      "src": "/icons/android/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
     }
   ],
-  "description": "GameShelf - Biblioteca de Jogos Pessoais"
+  "screenshots": [
+    {
+      "src": "/screenshots/home.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "label": "Página inicial"
+    },
+    {
+      "src": "/screenshots/detalhe-jogo.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "label": "Detalhe do jogo"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Biblioteca",
+      "short_name": "Biblioteca",
+      "url": "/biblioteca",
+      "icons": [
+        {
+          "src": "/icons/shortcut-library.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Adicionar Jogo",
+      "short_name": "Adicionar",
+      "url": "/adicionar",
+      "icons": [
+        {
+          "src": "/icons/shortcut-add.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "gameshelf",
+      "url": "/abrir?link=%s"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "/abrir",
+      "accept": {
+        "application/x-gameshelf": [".gshelf"]
+      },
+      "name": "Abrir arquivo GameShelf"
+    }
+  ],
+  "share_target": {
+    "action": "/compartilhar",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "titulo",
+      "text": "descricao",
+      "url": "link"
+    }
+  },
+  "handle_links": [
+    {
+      "url": "https://gameshelf.app/*",
+      "launch_type": "single-instance"
+    }
+  ],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "widgets": [
+    {
+      "name": "Top Jogos",
+      "short_name": "Top",
+      "description": "Jogos mais acessados",
+      "url": "/widget/top-jogos",
+      "icons": [
+        {
+          "src": "/icons/widget-icon.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false,
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://gameshelf.app",
+      "id": "com.gameshelf.web"
+    }
+  ]
 }
