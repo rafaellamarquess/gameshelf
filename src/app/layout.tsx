@@ -16,7 +16,6 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "GameShelf",
   description: "Sua Biblioteca de Jogos",
-  themeColor: "#1f2937",
   icons: {
     icon: [
       { url: "/favicon.ico" },

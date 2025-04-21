@@ -2,7 +2,7 @@
   "name": "GameShelf",
   "short_name": "GameShelf",
   "description": "Sua Biblioteca de Jogos",
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#1f2937",
@@ -17,11 +17,6 @@
       "src": "/icons/android/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
-    },
-    {
-      "src": "/favicon.ico",
-      "sizes": "any",
-      "type": "image/x-icon"
     }
   ],
   "prefer_related_applications": false,
@@ -32,21 +27,38 @@
       "id": "com.example.gameshelf"
     }
   ],
+  "orientation": "portrait",
+  "launch_handler": {
+    "action": "open_app",
+    "client_mode": "auto"
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "web+gameshelf",
+      "url": "https://game-shelf.netlify.app/handle/{action}"
+    }
+  ],
+"share_target": {
+  "action": "/share",
+  "method": "POST",
+  "enctype": "multipart/form-data",
+  "params": {
+    "title": "name",
+    "text": "description",
+    "url": "url"
+  }
+},
+  "background_sync": {
+    "name": "syncData",
+    "min_interval": 24
+  },
+  "offline_capability": true,
   "scope_extensions": ["/"],
   "categories": ["games", "entertainment"],
   "dir": "ltr",
   "iarc_rating_id": "com.example.gameshelf.rating",
   "lang": "pt-BR",
-  "launch_handler": {
-    "action": "open_app"
-  },
   "handle_links": true,
-  "protocol_handlers": [
-    {
-      "protocol": "gameshelf",
-      "url": "https://gameshelf.com/handle/{action}"
-    }
-  ],
   "widgets": [
     {
       "widget_type": "app_launch",
