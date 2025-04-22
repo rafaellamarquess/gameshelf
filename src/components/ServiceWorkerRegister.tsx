@@ -2,52 +2,54 @@
 
 import { useEffect } from "react";
 
-// Declare SyncManager type for TypeScript
-interface SyncManager {
-  register(tag: string): Promise<void>;
-}
-
-// Declare PeriodicSyncManager type for TypeScript
-interface PeriodicSyncManager {
-  getTags(): Promise<string[]>;
-  register(tag: string, options: { minInterval: number }): Promise<void>;
-}
-
 export function ServiceWorkerRegister() {
   useEffect(() => {
     if ("serviceWorker" in navigator) {
-      window.addEventListener("load", async () => {
-        try {
-          const registration = await navigator.serviceWorker.register("/service-worker.js");
+      navigator.serviceWorker
+        .register("/service-worker.js")
+        .then(async (registration) => {
           console.log("Service Worker registrado:", registration);
 
+          const reg = registration as ServiceWorkerRegistration & {
+            sync?: { register: (tag: string) => Promise<void> };
+            periodicSync?: {
+              getTags: () => Promise<string[]>;
+              register: (
+                tag: string,
+                options: { minInterval: number }
+              ) => Promise<void>;
+            };
+          };
+
           // Background Sync
-          if ("sync" in registration) {
-            const sync = registration.sync as SyncManager;
-            await sync.register("sync-favoritos");
-            await sync.register("sync-jogos");
-            console.log("Sync tasks registrados.");
-          } else {
-            console.warn("SyncManager não suportado.");
+          if (reg.sync) {
+            try {
+              await reg.sync.register("sync-favoritos");
+              await reg.sync.register("sync-jogos");
+              console.log("Sync tags registradas com sucesso");
+            } catch (err) {
+              console.warn("Erro ao registrar sync tags:", err);
+            }
           }
 
           // Periodic Background Sync
-          if ("periodicSync" in registration) {
-            const periodicSync = registration.periodicSync as PeriodicSyncManager;
-            const tags = await periodicSync.getTags();
-            if (!tags.includes("atualizar-jogos")) {
-              await periodicSync.register("atualizar-jogos", {
-                minInterval: 24 * 60 * 60 * 1000, // 1x por dia
-              });
-              console.log("Periodic Sync registrado.");
+          if (reg.periodicSync) {
+            try {
+              const tags = await reg.periodicSync.getTags();
+              if (!tags.includes("atualizar-jogos")) {
+                await reg.periodicSync.register("atualizar-jogos", {
+                  minInterval: 24 * 60 * 60 * 1000, // 1 dia
+                });
+                console.log("Periodic sync 'atualizar-jogos' registrado");
+              }
+            } catch (err) {
+              console.warn("Erro ao registrar periodic sync:", err);
             }
-          } else {
-            console.warn(" Periodic Sync não suportado.");
           }
-        } catch (error) {
-          console.error("Erro ao registrar Service Worker ou Sync:", error);
-        }
-      });
+        })
+        .catch((err) => {
+          console.error("Erro no registro do Service Worker:", err);
+        });
     }
   }, []);
 
