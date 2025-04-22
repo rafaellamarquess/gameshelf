@@ -18,7 +18,7 @@
       "src": "/icons/android/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     }
   ],
   "screenshots": [
@@ -62,7 +62,6 @@
 ],
   "categories": ["games", "entertainment"],
   "dir": "ltr",
-  "iarc_rating_id": "com.example.gameshelf.rating",
   "lang": "pt-BR",
   "handle_links": true,
   "widgets": [
