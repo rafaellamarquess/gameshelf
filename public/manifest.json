@@ -19,12 +19,19 @@
       "type": "image/png"
     }
   ],
+  "screenshots": [
+  {
+    "src": "/screenshots/home.png",
+    "sizes": "540x720",
+    "type": "image/png"
+  }
+],
   "prefer_related_applications": false,
   "related_applications": [
     {
       "platform": "play",
       "url": "https://play.google.com/store/apps/details?id=com.example.gameshelf",
-      "id": "com.example.gameshelf"
+      "id": "/?source=pwa"
     }
   ],
   "orientation": "portrait",
@@ -35,7 +42,7 @@
   "protocol_handlers": [
     {
       "protocol": "web+gameshelf",
-      "url": "https://game-shelf.netlify.app/handle/{action}"
+      "url": "/handle/%s"
     }
   ],
 "share_target": {
@@ -53,7 +60,11 @@
     "min_interval": 24
   },
   "offline_capability": true,
-  "scope_extensions": ["/"],
+  "scope_extensions": [
+  {
+    "origin": "https://game-shelf.netlify.app"
+  }
+],
   "categories": ["games", "entertainment"],
   "dir": "ltr",
   "iarc_rating_id": "com.example.gameshelf.rating",
@@ -65,5 +76,29 @@
       "url": "/launch_widget",
       "title": "Launch GameShelf"
     }
-  ]
+  ],
+  "file_handlers": [
+    {
+      "action": "/abrir-arquivo",
+      "accept": {
+        "application/json": [".json"]
+      }
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Biblioteca",
+      "url": "/biblioteca",
+      "icons": [{ "src": "/icons/book.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Favoritos",
+      "url": "/favoritos",
+      "icons": [{ "src": "/icons/heart.png", "sizes": "96x96" }]
+    }
+  ],
+  "display_override": ["standalone", "browser"],
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
 }

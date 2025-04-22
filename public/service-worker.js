@@ -3,39 +3,36 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox
 const CACHE = "pwabuilder-page-v2";
 const OFFLINE_PAGE = "offline.html";
 
-// SKIP WAITING
+// --- SKIP WAITING ---
 self.addEventListener("message", (event) => {
-  if (event.data && event.data.type === "SKIP_WAITING") {
+  if (event.data?.type === "SKIP_WAITING") {
     self.skipWaiting();
   }
 });
 
-// INSTALL
+// --- INSTALL ---
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE).then((cache) => cache.add(OFFLINE_PAGE))
+    caches.open(CACHE).then((cache) => cache.addAll([OFFLINE_PAGE]))
   );
 });
 
-// ACTIVATE
+// --- ACTIVATE ---
 self.addEventListener('activate', (event) => {
   event.waitUntil(self.clients.claim());
 });
 
-// ENABLE PRELOAD
-if (workbox.navigationPreload.isSupported()) {
+// --- FETCH ---
+if (self.workbox && workbox.navigationPreload.isSupported()) {
   workbox.navigationPreload.enable();
 }
 
-// FETCH - único handler
 self.addEventListener('fetch', (event) => {
   const url = event.request.url;
 
-  // Custom Protocol Handler
+  // Protocolo customizado
   if (url.startsWith("gameshelf://")) {
-    event.respondWith(
-      new Response("🔗 Protocolo personalizado gameshelf:// detectado", { status: 200 })
-    );
+    event.respondWith(new Response("Protocolo personalizado gameshelf:// detectado", { status: 200 }));
     return;
   }
 
@@ -43,11 +40,9 @@ self.addEventListener('fetch', (event) => {
   if (event.request.mode === 'navigate') {
     event.respondWith((async () => {
       try {
-        const preloadResp = await event.preloadResponse;
-        if (preloadResp) return preloadResp;
-
-        return await fetch(event.request);
-      } catch (error) {
+        const preload = await event.preloadResponse;
+        return preload || await fetch(event.request);
+      } catch {
         const cache = await caches.open(CACHE);
         return await cache.match(OFFLINE_PAGE);
       }
@@ -55,27 +50,23 @@ self.addEventListener('fetch', (event) => {
   }
 });
 
-// BACKGROUND SYNC
-self.addEventListener('sync', (event) => {
-  if (event.tag === 'sync-jogos') {
+// --- SYNC ---
+self.addEventListener("sync", (event) => {
+  if (event.tag === "sync-favoritos") {
+    event.waitUntil(syncFavoritos());
+  } else if (event.tag === "sync-jogos") {
     event.waitUntil(syncJogosComServidor());
   }
 });
 
-async function syncJogosComServidor() {
-  console.log('🔄 Sincronizando dados com servidor...');
-  // Aqui entraria a lógica real de sync, tipo IndexedDB -> API
-  return Promise.resolve();
-}
-
-// PERIODIC SYNC
+// --- PERIODIC SYNC ---
 self.addEventListener("periodicsync", (event) => {
   if (event.tag === "atualizar-jogos") {
     event.waitUntil(syncJogosComServidor());
   }
 });
 
-// PUSH NOTIFICATIONS
+// --- PUSH ---
 self.addEventListener("push", (event) => {
   const data = event.data?.json() || {};
   const title = data.title || "Notificação GameShelf";
@@ -83,17 +74,23 @@ self.addEventListener("push", (event) => {
     body: data.body || "Você tem atualizações disponíveis.",
     icon: "/icons/android/icon-192x192.png",
     badge: "/icons/android/icon-192x192.png",
-    data: {
-      url: data.url || '/'
-    }
+    data: { url: data.url || "/" },
   };
-
   event.waitUntil(self.registration.showNotification(title, options));
 });
 
-self.addEventListener('notificationclick', (event) => {
-  const { notification } = event;
-  const url = notification.data?.url || '/';
-  event.waitUntil(clients.openWindow(url));
-  notification.close();
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  event.waitUntil(clients.openWindow(event.notification.data.url));
 });
+
+// --- FUNÇÕES MOCKADAS ---
+async function syncFavoritos() {
+  console.log("Sincronizando favoritos...");
+  return Promise.resolve();
+}
+
+async function syncJogosComServidor() {
+  console.log("Atualizando jogos...");
+  return Promise.resolve();
+}
